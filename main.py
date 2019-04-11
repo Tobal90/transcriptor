@@ -28,7 +28,7 @@ def append_to_file(filename, string):
         temp_file.close()
 
 
-for flac_file in os.listdir(audio_folder):
+for flac_file in sorted(os.listdir(audio_folder)):
     if flac_file.endswith(".flac"):
         file_name = os.path.join(audio_folder, flac_file)
 
