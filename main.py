@@ -13,10 +13,11 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # Variables
-key_path = "key_path"
-audio_folder = "audio_folder"
-output_file = "output_file"
+key_path = "/Users/Cris/Downloads/cris-key.json"
+audio_folder = "/Users/Cris/Documents/AudFree Audio Capture/Converted"
+output_file = "/Users/Cris/Documents/AudFree Audio Capture/Converted/output.txt"
 
+class_code = "UDD2"
 
 # Instantiates a client
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
@@ -51,14 +52,15 @@ for flac_file in sorted(os.listdir(audio_folder)):
             storage_client = storage.Client()
 
             bucket = 'bucket'
+            bucket_file_name = class_code + flac_file
 
             bucket = storage_client.get_bucket(bucket)
-            blob = bucket.blob(flac_file)
+            blob = bucket.blob(bucket_file_name)
 
             with open(file_name, 'rb') as audio_file:
                 blob.upload_from_file(audio_file)
 
-            audio = types.RecognitionAudio(uri='gs://' + bucket + '/' + flac_file)
+            audio = types.RecognitionAudio(uri='gs://' + bucket + '/' + bucket_file_name)
 
             operation = client.long_running_recognize(config, audio)
             response = operation.result(timeout=90)
