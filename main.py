@@ -13,11 +13,10 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # Variables
-key_path = "/Users/Cris/Downloads/cris-key.json"
-audio_folder = "/Users/Cris/Documents/AudFree Audio Capture/Converted"
-output_file = "/Users/Cris/Documents/AudFree Audio Capture/Converted/output.txt"
-
-class_code = "UDD2"
+key_path = "key_path"
+audio_folder = "audio_folder"
+output_file = "output_file"
+class_code = "code"
 
 # Instantiates a client
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
