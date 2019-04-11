@@ -16,7 +16,6 @@ sys.setdefaultencoding('utf-8')
 key_path = "key_path"
 audio_folder = "audio_folder"
 output_file = "output_file"
-class_code = "code"
 
 # Instantiates a client
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
@@ -51,7 +50,7 @@ for flac_file in sorted(os.listdir(audio_folder)):
             storage_client = storage.Client()
 
             bucket = 'bucket'
-            bucket_file_name = class_code + flac_file
+            bucket_file_name = flac_file
 
             gc_bucket = storage_client.get_bucket(bucket)
             blob = gc_bucket.blob(bucket_file_name)
