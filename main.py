@@ -7,6 +7,7 @@ import sys
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+from google.cloud import storage
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -43,7 +44,24 @@ for flac_file in sorted(os.listdir(audio_folder)):
             language_code='es-CL')
 
         # Detects speech in the audio file
-        response = client.recognize(config, audio)
+
+        try:
+            response = client.recognize(config, audio)
+        except:
+            storage_client = storage.Client()
+
+            bucket = 'bucket'
+
+            bucket = storage_client.get_bucket(bucket)
+            blob = bucket.blob(flac_file)
+
+            with open(file_name, 'rb') as audio_file:
+                blob.upload_from_file(audio_file)
+
+            audio = types.RecognitionAudio(uri='gs://' + bucket + '/' + flac_file)
+
+            operation = client.long_running_recognize(config, audio)
+            response = operation.result(timeout=90)
 
         for result in response.results:
             append_to_file(output_file, result.alternatives[0].transcript)
