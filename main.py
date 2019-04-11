@@ -53,8 +53,8 @@ for flac_file in sorted(os.listdir(audio_folder)):
             bucket = 'bucket'
             bucket_file_name = class_code + flac_file
 
-            bucket = storage_client.get_bucket(bucket)
-            blob = bucket.blob(bucket_file_name)
+            gc_bucket = storage_client.get_bucket(bucket)
+            blob = gc_bucket.blob(bucket_file_name)
 
             with open(file_name, 'rb') as audio_file:
                 blob.upload_from_file(audio_file)
